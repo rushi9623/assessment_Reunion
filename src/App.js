@@ -1,23 +1,29 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Header from './components/Header/Header';
+import Sidebar from './components/Sidebar/Sidebar';
+import DataTable from './components/DataTable/DataTable';
 import './App.css';
 
 function App() {
+  const [columns, setColumns] = useState([
+    { name: 'Column 1', visible: true },
+    { name: 'Column 2', visible: true },
+    { name: 'Column 3', visible: true }
+  ]);
+
+  const toggleColumn = (index) => {
+    const newColumns = [...columns];
+    newColumns[index].visible = !newColumns[index].visible;
+    setColumns(newColumns);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <div className="main-content">
+        <Sidebar columns={columns} toggleColumn={toggleColumn} />
+        <DataTable columns={columns} />
+      </div>
     </div>
   );
 }
